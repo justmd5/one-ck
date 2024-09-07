@@ -17,14 +17,12 @@
   ],
   "require": {
     "php": ">=7.2",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-bcmath":"*"
   },
   "autoload": {
     "psr-4": {
       "OneCk\\": "src/"
     }
-  },
-  "suggest": {
-    "ext-bcmath": "Supported Decimal128"
   }
 }

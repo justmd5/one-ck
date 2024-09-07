@@ -459,17 +459,10 @@ class Types
             $fn = $call[$type];
         } else if (self::isDecimal($type)) {
             $arr = explode(',', substr($type, 8, -1));
-            if ($arr[0] >= 19) {
-                $fn = function ($v) use ($arr) {
-                    $tr = explode('.', "{$v}");
-                    isset($tr[1]) || $tr[1] = '';
-                    return $tr[0] . $tr[1] . str_repeat('0', max(0, $arr[1] - strlen($tr[1])));
-                };
-            } else {
-                $fn = function ($v) use ($arr) {
-                    return $v * pow(10, $arr[1]);
-                };
-            }
+            $scale = intval($arr[1]);
+            $fn = function ($v) use ($scale) {
+                return bcmul($v, bcpow('10', $scale, 0), 0);
+            };
         } else if (self::isDatetime64($type)) {
             $n  = substr($type, 11, -1);
             $fn = function ($v) use ($n) {
@@ -513,16 +506,10 @@ class Types
             $fn = $call[$type];
         } else if (self::isDecimal($type)) {
             $arr = explode(',', substr($type, 8, -1));
-            if ($arr[0] >= 19) {
-                $fn = function ($v) use ($arr) {
-                    $v = "{$v}";
-                    return substr($v, 0, -$arr[1]) . '.' . substr($v, -$arr[1]);
-                };
-            } else {
-                $fn = function ($v) use ($arr) {
-                    return $v / pow(10, $arr[1]);
-                };
-            }
+            $scale = intval($arr[1]);
+            $fn = function ($v) use ($scale) {
+                return bcdiv($v, bcpow('10', $scale, 0), $scale);
+            };
         } else if (self::isDatetime64($type)) {
             $fn = function ($v) {
                 return date('Y-m-d H:i:s', substr($v, 0, 10)) . '.' . substr($v, 10);
