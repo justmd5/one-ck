@@ -1,0 +1,28 @@
+{
+  "name": "justmd5/one-ck",
+  "type": "library",
+  "description": "clickhouse tcp client",
+  "keywords": [
+    "php",
+    "tcp",
+    "client",
+    "clickhouse"
+  ],
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "justmd5",
+      "email": "heyjun2012@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "ext-json": "*",
+    "ext-bcmath":"*"
+  },
+  "autoload": {
+    "psr-4": {
+      "OneCk\\": "src/"
+    }
+  }
+}
